@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+<!DOCTYPE mapper 
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zxl.movie.dao.MovieMapper">
+	<select id="selects" resultType="movie">
+		select * from movie
+		<where>
+			<if test="name != '' and name != null">
+				name like concat('%',#{name},'%')
+			</if>
+			<if test="direct != null and direct != ''">
+				and direct like concat('%',#{direct},'%')
+			</if>
+			<if test="year != null and year != 0">
+				and year = #{year}
+			</if>
+			<if test="timeStart != null and timeStart !=''">
+				and time >= #{timeStart}
+			</if>
+			<if test="timeEnd != null and timeEnd !=''">
+				and time &lt;= #{timeEnd}
+			</if>
+			<if test="priceStart != null and priceStart !=0">
+				and price >= #{priceStart}
+			</if>
+			<if test="priceEnd != null and priceEnd !=0">
+				and price &lt;= #{priceEnd}
+			</if>
+			<if test="durationStart != null and durationStart !=0">
+				and duration >= #{durationStart}
+			</if>
+			<if test="durationEnd != null and durationEnd !=0">
+				and duration &lt;= #{durationEnd}
+			</if>
+		</where>
+		<if test="orderByColumn!=null and orderByColumn!=''">
+			order by ${orderByColumn} ${orderByMethod}
+
+		</if>
+	</select>
+</mapper>
